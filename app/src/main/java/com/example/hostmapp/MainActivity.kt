@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // enableEdgeToEdge()
-        val settingsViewModel = SettingsViewModel()
+        val settingsViewModel = SettingsViewModel(this)
 
         val intent = Intent(this, DashboardDataService::class.java)
         startService(intent)

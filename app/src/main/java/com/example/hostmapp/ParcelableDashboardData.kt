@@ -26,6 +26,10 @@ data class ParcelableDashboardData(
         parcel.writeString(gear)
     }
 
+    override fun toString(): String {
+        return "Speed: $speed, RPM: $rpm, Fuel Level: $fuelLevel, Battery Level: $batteryLevel"
+    }
+
     override fun describeContents() = 0
 
     companion object CREATOR : Parcelable.Creator<ParcelableDashboardData> {

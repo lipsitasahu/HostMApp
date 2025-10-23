@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class DashboardViewModel : ViewModel() {
     private val _dashboardData = MutableStateFlow(
@@ -58,7 +59,11 @@ class DashboardViewModel : ViewModel() {
             while (bound) {
                 try {
                     val data = dashboardService?.getDashboardData()
-                    if (data != null) _dashboardData.value = data
+                    if (data != null) {
+                        _dashboardData.value = data
+                        val currentDateTime: LocalDateTime = LocalDateTime.now()
+                        dashboardService?.updateSetting(currentDateTime.toString(),data.toString())
+                    }
                 } catch (_: Exception) { }
                 delay(1000)
             }

@@ -3,10 +3,11 @@ package com.example.hostmapp.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import com.example.hostmapp.IDashboardInterface
 import com.example.hostmapp.ParcelableDashboardData
 import com.example.hostmapp.data.AppDatabase
-import com.example.hostmapp.data.SettingsEntity
+import com.example.hostmapp.data.SettingEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -35,7 +36,11 @@ class DashboardDataService : Service() {
 
         override fun updateSetting(key: String, value: String) {
             serviceScope.launch {
-                db.settingsDao().insertOrUpdate(SettingsEntity(key, value))
+                db.settingsDao().insertOrUpdate(SettingEntity(key, value))
+                val settingFound = db.settingsDao().getSetting(key)
+                if (settingFound != null) {
+                    Log.i("DashboardDataService", "Setting updated: $key = $value")
+                }
             }
         }
     }

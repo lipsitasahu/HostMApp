@@ -6,9 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [SettingsEntity::class], version = 1, exportSchema = false)
+@Database(entities = [SettingEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun settingsDao(): SettingsDao
+
+    abstract fun settingsDao(): SettingDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null

@@ -6,7 +6,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface SettingsDao {
+interface SettingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdate(setting: SettingsEntity)
+    suspend fun insertOrUpdate(setting: SettingEntity)
+
+    @Query("SELECT * FROM settings WHERE key = :key")
+    suspend fun getSetting(key: String): SettingEntity?
 }
