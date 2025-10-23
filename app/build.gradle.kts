@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -40,8 +41,8 @@ android {
     }
 }
 
+val roomVersion = "2.7.0-alpha06"
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,4 +64,13 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.material.icons.extended)
+    //
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler.v270alpha06)
+    implementation(libs.androidx.room.ktx.v270alpha06)
 }
+
+configurations.all {
+    exclude(group = "com.intellij", module = "annotations")
+}
+
