@@ -34,8 +34,6 @@ class SettingsViewModel(context: Context) : ViewModel() {
             appDatabase.settingsDao().insertOrUpdate(SettingEntity("dayNightMode", _dayNightMode.value.toString()))
             printSettings()
         }
-
-
     }
     fun toggleHighBeamAssist() {
         _highBeamAssist.value = !_highBeamAssist.value
@@ -43,7 +41,6 @@ class SettingsViewModel(context: Context) : ViewModel() {
             appDatabase.settingsDao().insertOrUpdate(SettingEntity("highBeamAssist", _highBeamAssist.value.toString()))
             printSettings()
         }
-
     }
     fun toggleAutoUpdate() {
         _autoUpdate.value = !_autoUpdate.value
@@ -51,7 +48,6 @@ class SettingsViewModel(context: Context) : ViewModel() {
             appDatabase.settingsDao().insertOrUpdate(SettingEntity("autoUpdate", _autoUpdate.value.toString()))
             printSettings()
         }
-
     }
     fun updateLanguage(lang: String) {
         _language.value = lang
@@ -67,7 +63,6 @@ class SettingsViewModel(context: Context) : ViewModel() {
             appDatabase.settingsDao().insertOrUpdate(SettingEntity("units", unit))
             printSettings()
         }
-
     }
     
     suspend fun printSettings() {

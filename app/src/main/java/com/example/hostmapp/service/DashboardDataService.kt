@@ -23,12 +23,13 @@ class DashboardDataService : Service() {
     private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private lateinit var db: AppDatabase
 
-    @Volatile private var currentData = ParcelableDashboardData(
+    @Volatile
+    private var currentData = ParcelableDashboardData(
         speed = 0f,
         rpm = 0f,
         gear = "N",
         fuelLevel = 100f,
-        batteryLevel = 100f
+        batteryLevel = 1f
     )
 
     private val binder = object : IDashboardInterface.Stub() {
@@ -57,11 +58,17 @@ class DashboardDataService : Service() {
         serviceScope.launch {
             while (isActive) {
                 delay(3000)
+                val newFuelLevel = (currentData.fuelLevel - 0.1f).coerceAtLeast(0f)
+                val newBatteryLevel = (currentData.batteryLevel - 0.05f).coerceAtLeast(0f)
+
+                val updatedFuelLevel = if (newFuelLevel == 0f) 1f else newFuelLevel
+                val updatedBatteryLevel = if (newBatteryLevel == 0f) 1f else newBatteryLevel
+
                 val newData = currentData.copy(
                     speed = Random.nextInt(0, 180).toFloat(),
                     rpm = Random.nextInt(500, 7000).toFloat(),
-                    fuelLevel = (currentData.fuelLevel - 0.1f).coerceAtLeast(0f),
-                    batteryLevel = (currentData.batteryLevel - 0.05f).coerceAtLeast(0f),
+                    fuelLevel = updatedFuelLevel,
+                    batteryLevel = updatedBatteryLevel,
                     gear = listOf("N", "1", "2", "3", "4", "5", "6").random()
                 )
                 currentData = newData
